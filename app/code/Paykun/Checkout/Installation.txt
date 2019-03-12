@@ -1,0 +1,18 @@
+=> Installation steps
+=> Paykun payment for Magento 2.X
+=> Extract zip on the following path app > code (So that inside code directory must have "Paykun" directory and all the source code inside this directory)
+=> Now go to the admin > Store > Configurations > Sales > Payment Methods > Paykun
+=> Enter all the required details provided by paykun.
+=> Required fields, Merchant Id, Access Token, Encryption Key
+=> Please read below section "How To Generate Access token and API Secret :"
+
+
+================================
+How To Generate Access token and API Secret :
+================================
+
+You can generate Or Regenerate Access token and API Secret from login into your paykun admin panel, Then Go To : Settings -> Security -> API Keys. There you will find the generate button if you have not generated api key before.
+
+If you have generated api key before then you will see the date of the api key generate, since you will not be able to retrieve the old api key (For security reasons) we have provided the re-generate option, so you can re-generate api key in case you have lost the old one.
+
+Note : Once you re-generate api key your old api key will stop working immediately. So be cautious while using this option.
