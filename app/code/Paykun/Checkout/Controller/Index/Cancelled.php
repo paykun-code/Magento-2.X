@@ -103,17 +103,18 @@ class Cancelled extends \Magento\Framework\App\Action\Action
         try {
 
             $liveOrSandboxMode = $this->getConfig('is_live_or_sandbox') ? true : false;
-            if(!$liveOrSandboxMode) {
+            /*if(!$liveOrSandboxMode) {
 
                 $this->messageManager->addWarningMessage('Order cancelled! (PayKun Sandbox mode).');
                 $this->addLog('Order cancelled! (PayKun Sandbox mode).');
 
-            } else {
+            } else */
+            {
 
                 $this->setTransactionId();
                 $errorMsg = trim(strip_tags('Payment cancelled. '.'**Paykun Transaction Id => '. $this->TXN_ID." **"));
 
-                $response = $this->_getcurlInfo($this->TXN_ID);
+                $response = $this->_getcurlInfo($this->TXN_ID, $liveOrSandboxMode);
                 if($response == null) {
 
                     $errorMsg = 'Server communication failed.';
@@ -285,13 +286,17 @@ class Cancelled extends \Magento\Framework\App\Action\Action
 
     }
 
-    private function _getcurlInfo($iTransactionId) {
+    private function _getcurlInfo($iTransactionId, $mode) {
 
         try {
 
             if(!$iTransactionId) return null;
 
-            $cUrl        = 'https://api.paykun.com/v1/merchant/transaction/' . $iTransactionId . '/';
+            $cUrl = 'https://api.paykun.com/v1/merchant/transaction/' . $iTransactionId . '/';
+            if($mode == false) {
+                $cUrl = 'https://sandbox.paykun.com/api/v1/merchant/transaction/' . $iTransactionId . '/';;
+            }
+
             $merchantId  = $this->getConfig("merchant_gateway_key");
             $accessToken = $this->getConfig("merchant_access_key", true);
 

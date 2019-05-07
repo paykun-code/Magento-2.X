@@ -78,28 +78,20 @@ class Success extends \Magento\Framework\App\Action\Action
             //$order = $this->_checkoutSession->getLastRealOrder();
 
             $liveOrSandboxMode = ($this->getConfig('is_live_or_sandbox')) ? true : false;
-            $response = $this->_getcurlInfo($this->TXN_ID);
+            $response = $this->_getcurlInfo($this->TXN_ID, $liveOrSandboxMode);
 
 
             $order_id = $response['data']['transaction']['custom_field_1'];
 
             $order = $this->getOrderById($order_id);
 
-            if($response == null && $liveOrSandboxMode == true) {
+            if($response == null) {
 
                 $errorMsg = 'Server communication failed.';
 
             } else if($response["status"] == false) {
 
-                if($liveOrSandboxMode == false) {
-                    $this->messageManager->addWarningMessage('Order successfully placed using PayKun Sandbox environment.');
-                    $this->addLog('Order successfully placed using PayKun Sandbox environment.');
-
-                } else {
-
-                    $errorMsg = $response["errors"]["errorMessage"];
-
-                }
+                $errorMsg = $response["errors"]["errorMessage"];
 
             } else if ($order->getId()) {
 
@@ -266,13 +258,17 @@ class Success extends \Magento\Framework\App\Action\Action
         return $transaction;
     }
 
-    private function _getcurlInfo($iTransactionId)
+    private function _getcurlInfo($iTransactionId, $mode)
     {
 
         try {
 
             if(!$iTransactionId) return null;
             $cUrl = 'https://api.paykun.com/v1/merchant/transaction/' . $iTransactionId . '/';
+            if($mode == false) {
+                $cUrl = 'https://sandbox.paykun.com/api/v1/merchant/transaction/' . $iTransactionId . '/';;
+            }
+
             $merchantId = $this->getConfig("merchant_gateway_key");
             $accessToken = $this->getConfig("merchant_access_key", true);
 
