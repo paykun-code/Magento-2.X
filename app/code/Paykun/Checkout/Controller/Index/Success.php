@@ -308,10 +308,10 @@ class Success extends \Magento\Framework\App\Action\Action
 
     }
 }
-function debug($data, $isExit = true) {
+/*function debug($data, $isExit = true) {
     echo "<pre>";
     print_r($data);
     if($isExit === true) {
         exit;
     }
-}
+}*/

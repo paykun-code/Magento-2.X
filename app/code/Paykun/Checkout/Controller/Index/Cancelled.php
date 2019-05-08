@@ -327,10 +327,10 @@ class Cancelled extends \Magento\Framework\App\Action\Action
     }
 }
 
-function debug($data, $isExit = false) {
+/*function debug($data, $isExit = false) {
     echo "<pre>";
     print_r($data);
     if($isExit === true) {
         exit;
     }
-}
+}*/
