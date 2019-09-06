@@ -105,7 +105,7 @@ class Success extends \Magento\Framework\App\Action\Action
                         //if(1) {
                         $resAmout = $response['data']['transaction']['order']['gross_amount'];
 
-                        if(($order->getBaseGrandTotal()	== $resAmout)) {
+                        if((intval($order->getBaseGrandTotal())	== intval($resAmout))) {
 
                             //Change order status
                             $orderState = \Magento\Sales\Model\Order::STATE_PROCESSING;
