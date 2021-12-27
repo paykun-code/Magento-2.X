@@ -17,7 +17,7 @@ class PaykunProcessor extends \Magento\Framework\App\Action\Action {
     const GATEWAY_URL_DEV = "https://sandbox.paykun.com/payment";
     const SUCCESS_URL = "paykun_checkout_gateway/index/success";
     const FAILED_URL = "paykun_checkout_gateway/index/cancelled";
-    const ALLOWED_CURRENCIES = ['INR'];
+    //const ALLOWED_CURRENCIES = ['INR'];
 
     protected $resultJsonFactory;
     protected $_scopeConfig;
@@ -89,7 +89,8 @@ class PaykunProcessor extends \Magento\Framework\App\Action\Action {
             if($orderId) {
 
                 $this->setOrderDetail($orderId);
-                if(in_array($this->_orderDetail->getOrderCurrencyCode(), self::ALLOWED_CURRENCIES)) {
+                //if(in_array($this->_orderDetail->getOrderCurrencyCode(), self::ALLOWED_CURRENCIES)) {
+                if($this->_orderDetail->getOrderCurrencyCode()) {
 
                     $formData = $this->getPaykunPaymentDetail($orderId);
 
